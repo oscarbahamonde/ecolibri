@@ -1,20 +1,64 @@
-@import url('tailwindcss/tailwind.css');
-@import url('@mdi/font/css/materialdesignicons.css');
+@import url("tailwindcss/tailwind.css");
+@import url("@mdi/font/css/materialdesignicons.css");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans+KR&family=IBM+Plex+Serif&family=Patrick+Hand&display=swap");
 
 .social-icon {
-    @apply mdi  text-2xl btn btn-circle btn-outline text-primary btn-primary;
-    &:hover{
-        @apply scale-125;
-    }
+  @apply mdi  text-2xl btn btn-circle;
+  @apply text-success;
+  @apply bg-neutral;
+  @apply border-2;
+  @apply border-success;
+  &:hover {
+    @apply scale-125;
+    @apply bg-success;
+    @apply text-neutral;
+  }
 }
 button {
-    @apply btn;
+  @apply btn;
 }
 
 i {
-    @apply mdi;
+  @apply mdi;
 }
 
 .dropzone {
-    @apply bg-white shadow-md rounded-lg p-8 cursor-pointer w-1/2 h-full flex flex-col items-center;
+  @apply bg-white shadow-md rounded-lg p-8 cursor-pointer w-1/2 h-full flex flex-col items-center;
+}
+
+.font-sans {
+  font-family: "IBM Plex Sans KR", sans-serif;
+}
+
+.font-serif {
+  font-family: "IBM Plex Serif", serif;
+}
+
+.font-mono {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.font-script {
+  font-family: "Patrick Hand", cursive;
+}
+
+.dashboard-link {
+  @apply navbar bottom-0 fixed shadow-2xl flex flex-row items-center w-auto rounded-lg bg-primary text-white;
+  @apply ease-in-out transition-opacity duration-500;
+  i {
+    @apply text-3xl font-extrabold mx-2 px-8 align-middle;
+  }
+  span{
+    @apply hidden;
+};
+  &:hover {
+    
+    span {
+        @apply text-2xl mx-2 px-8 align-middle;
+        display: block;
+    }
+    i {
+        @apply hidden;
+    }  
+  }
 }

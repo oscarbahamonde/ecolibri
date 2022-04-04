@@ -14,14 +14,16 @@
 
 <Router>
   <header>
-    <div class="navbar bg-base-100">
+    <div class="navbar bg-neutral">
       <div class="flex-1">
-        <a class="btn btn-ghost normal-case text-xl rounded" href="/"
+        <a class="btn btn-ghost normal-case text-xl text-white rounded" href="/"
           ><img
             src="/logo.png"
-            class="w-24"
-            alt="hip hop movimiento cultural"
-          /></a
+            class="w-12 mx-2"
+            alt="ecolibri-logo"
+          />
+          <h1 class="text-3xl mx-2 font-script">eColibri</h1>
+          </a
         >
       </div>
       <div class="flex-none gap-2">
@@ -85,9 +87,14 @@
     </Route>
 
     <PrivateRoute path="profile" let:location>
-      <div class="h-screen">
+      <div class="h-screen flex flex-col items-center">
       <Profile />
-      <Panel />
+      <Link to="/dashboard" class="dashboard-link"><i class="mdi-menu  "></i><span class="align-middle text-2xl">Dashboard</span></Link>
+    </div>
+    </PrivateRoute>
+    <PrivateRoute path="dashboard" let:location>
+      <div class="h-screen">
+      <Panel route="home"/>
     </div>
     </PrivateRoute>
   </main>

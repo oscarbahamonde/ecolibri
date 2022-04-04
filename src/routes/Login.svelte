@@ -1,42 +1,7 @@
-<script>
-  import { user, auth } from "../store";
-  import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    GoogleAuthProvider,
-    GithubAuthProvider,
-    signInWithPopup,
-  } from "firebase/auth";
-  import { useNavigate, useLocation } from "svelte-navigator";
-
-  const google = new GoogleAuthProvider();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  let email = "";
-  let password = "";
-
-  async function userIn() {
-    $user = await signInWithEmailAndPassword(auth, email, password);
-    const from = ($location.state && $location.state.from) || "/";
-    navigate("/profile", { replace: true });
-  }
-
-  async function googleIn() {
-    $user = await signInWithPopup(auth, google);
-    const from = ($location.state && $location.state.from) || "/";
-    navigate("/profile", { replace: true });
-  }
-
-  async function userUp() {
-    const usr = await createUserWithEmailAndPassword(auth, email, password);
-    $user = await signInWithEmailAndPassword(auth, email, password);
-    navigate("/profile");
-  }
-</script>
-
 <div class="hero min-h-screen bg-base-200">
-  <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 rounded-lg">
+  <div
+    class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 rounded-lg"
+  >
     <div class="card-body">
       <div class="form-control">
         <label class="label" for="email">
@@ -74,3 +39,61 @@
     </div>
   </div>
 </div>
+<script>
+  import { user, auth, crud } from "../store";
+  import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    GithubAuthProvider,
+    signInWithPopup,
+  } from "firebase/auth";
+  import { useNavigate, useLocation } from "svelte-navigator";
+
+  const google = new GoogleAuthProvider();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  let email = "";
+  let password = "";
+
+  async function userIn() {
+    $user = await signInWithEmailAndPassword(auth, email, password);
+    const from = ($location.state && $location.state.from) || "/";
+    async () => {
+      await $crud.post("user", {
+        "fullname": $user.displayName,
+        "photoURL": $user.photoURL,
+        "email": $user.email,
+      });
+    };
+    navigate("/profile", { replace: true });
+  }
+
+  async function googleIn() {
+    $user = await signInWithPopup(auth, google);
+    const from = ($location.state && $location.state.from) || "/";
+    navigate("/profile", { replace: true });
+    async () => {
+      await $crud.post("user", {
+        fullname: $user.displayName,
+        photoURL: $user.photoURL,
+        email: $user.email,
+      });
+    };
+  }
+
+  async function userUp() {
+    const usr = await createUserWithEmailAndPassword(auth, email, password);
+    $user = await signInWithEmailAndPassword(auth, email, password);
+    async () => {
+      await $crud.post("user", {
+        fullname: $user.displayName,
+        photoURL: $user.photoURL,
+        email: $user.email,
+      });
+      console.log("user created");
+    };
+    navigate("/profile");
+  }
+</script>
